@@ -8,6 +8,8 @@ import {AngularFirestoreModule } from 'angularfire2/firestore';
 import { AppComponent } from './app.component';
 import { ItemsComponent } from './components/items/items.component';
 
+import {ItemService} from './services/item.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +20,7 @@ import { ItemsComponent } from './components/items/items.component';
     AngularFireModule.initializeApp(environment.firebase, 'angularfs'), //imports anyth for firebase
     AngularFirestoreModule
   ],
-  providers: [],
+  providers: [ItemService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
