@@ -1,3 +1,14 @@
-<p>
-  items works!
-</p>
+<!-- checks if there's data in array if not, it goes into method (template) and calls #noItems -->
+<!-- it then loops through the items brought in by the items array and assigned a variable -->
+<div *ngIf="items?.length > 0; else noItems">
+  <ul *ngFor="let item of items" class="collection">
+    <li class="collection-item"><strong>{{item.title}}:</strong>{{item.description}}
+    </li>
+  </ul>
+</div>
+
+
+<ng-template #noItems>
+  <hr />
+  <h5>There are no items to list</h5>
+</ng-template>
