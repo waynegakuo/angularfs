@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { map } from 'rxjs/operators'; //I always need to import this and pipe it
 import {Item} from '../models/item';
 import {Observable} from 'rxjs';
 
@@ -15,7 +15,15 @@ export class ItemService {
   items: Observable<Item[]>
 
   constructor(public afs: AngularFirestore) {
-    this.items= this.afs.collection('items').valueChanges(); //datastream
+    //valueChanges() does not allow us to display ID so we use snapshotChanges() instead
+    //this.items= this.afs.collection('items').valueChanges(); //datastream
+    this.items= this.afs.collection('items').snapshotChanges().pipe(map(changes=>{
+    return changes.map(a=>{
+      const data=a.payload.doc.data() as Item;
+      data.id=a.payload.doc.id;
+      return data
+    })
+  }));
   }
   getItems(){
     return this.items;
