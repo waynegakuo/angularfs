@@ -17,7 +17,9 @@ export class ItemService {
   constructor(public afs: AngularFirestore) {
     //valueChanges() does not allow us to display ID so we use snapshotChanges() instead
     //this.items= this.afs.collection('items').valueChanges(); //datastream
-    this.items= this.afs.collection('items').snapshotChanges().pipe(map(changes=>{
+    this.itemsCollection=this.afs.collection('items'); //we need this to add
+
+    this.items= this.itemsCollection.snapshotChanges().pipe(map(changes=>{
     return changes.map(a=>{
       const data=a.payload.doc.data() as Item;
       data.id=a.payload.doc.id;
@@ -27,5 +29,8 @@ export class ItemService {
   }
   getItems(){
     return this.items;
+  }
+  addItem(item: Item){
+    this.itemsCollection.add(item);
   }
 }

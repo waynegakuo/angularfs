@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ItemService} from '../../services/item.service'; //we wanna use it
+import {Item} from '../../models/item'; //model
 
 @Component({
   selector: 'app-add-item',
@@ -6,10 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-item.component.css']
 })
 export class AddItemComponent implements OnInit {
+  item: Item= {
+    title: '',
+    description: ''
+  }
 
-  constructor() { }
+  constructor(private itemService:ItemService) { }
 
   ngOnInit() {
+  }
+
+  onSubmit(){
+    if(this.item.title != '' && this.item.description != ''){
+      this.itemService.addItem(this.item);
+      this.item.title='';
+      this.item.description='';
+
+    }
   }
 
 }
