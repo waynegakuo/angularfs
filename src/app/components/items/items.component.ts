@@ -19,5 +19,8 @@ export class ItemsComponent implements OnInit {
       this.items=subItems; //getting items through Observable and setting them to items
     })
   }
+  deleteItem(event, item){
+    this.itemService.deleteItem(item);
+  }
 
 }

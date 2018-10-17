@@ -2,7 +2,7 @@
 <!-- it then loops through the items brought in by the items array and assigned a variable -->
 <div *ngIf="items?.length > 0; else noItems">
   <ul *ngFor="let item of items" class="collection">
-    <li class="collection-item"><strong>{{item.title}}:</strong>{{item.description}}
+    <li (dblclick)="deleteItem($event, item)" class="collection-item"><strong>{{item.title}}:</strong>{{item.description}}
     </li>
   </ul>
 </div>

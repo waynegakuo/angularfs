@@ -13,6 +13,7 @@ from 'angularfire2/firestore';
 export class ItemService {
   itemsCollection: AngularFirestoreCollection <Item>;
   items: Observable<Item[]>
+  itemDoc: AngularFirestoreDocument <Item>
 
   constructor(public afs: AngularFirestore) {
     //valueChanges() does not allow us to display ID so we use snapshotChanges() instead
@@ -32,5 +33,9 @@ export class ItemService {
   }
   addItem(item: Item){
     this.itemsCollection.add(item);
+  }
+  deleteItem(item: Item){
+    this.itemDoc=this.afs.doc(`items/${item.id}`); //using template string to fetch
+    this.itemDoc.delete();
   }
 }
