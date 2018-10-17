@@ -10,6 +10,9 @@ import {Item} from '../../models/item'; //we need to import our interface from m
 })
 export class ItemsComponent implements OnInit {
   items: Item[]; //coming from our interface
+  editState: boolean=false;
+  itemToEdit: Item;
+
 
   constructor(private itemService: ItemService) {}
 
@@ -19,8 +22,20 @@ export class ItemsComponent implements OnInit {
       this.items=subItems; //getting items through Observable and setting them to items
     })
   }
-  deleteItem(event, item){
+  deleteItem(event, item: Item){
+    this.clearState();
     this.itemService.deleteItem(item);
   }
-
+  editItem(event, item: Item){
+    this.editState=true;
+    this.itemToEdit=item;
+  }
+  updateItem(item: Item){
+    this.itemService.updateItem(item);
+    this.clearState();
+  }
+  clearState(){
+    this.editState=false;
+    this.itemToEdit=null;
+  }
 }
